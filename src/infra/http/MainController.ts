@@ -44,71 +44,91 @@ export class MainController {
       }
     );
 
-    httpServer.register("get", "/users/:id/status", async function (params: any) {
-      const output = await registry.inject("UsersService").updateStatus(params.id);
-      return output;
-    });
+    httpServer.register(
+      "get",
+      "/users/:id/status",
+      async function (params: any) {
+        const output = await registry
+          .inject("UsersService")
+          .updateStatus(params.id);
+        return output;
+      }
+    );
 
     httpServer.register(
       "post",
       "/affiliate/create",
       async function (params: any, body: any) {
-        const usersSchema = z.object({
+        const affiliateSchema = z.object({
+          nome: z.string(),
+          cpf: z.string(),
+          dataNasc: z.string(),
           email: z.string(),
-          password: z.string(),
-          name: z.string(),
+          telefone: z.string(),
+          endereco: z.string(),
+          cidade: z.enum([
+            "São Paulo",
+            "Campinas",
+            "Santos",
+            "Rio de Janeiro",
+            "Niterói",
+            "Petrópolis",
+            "Curitiba",
+            "Londrina",
+            "Maringá",
+          ]),
+          estado: z.enum(["SP", "RJ", "BH", "PR"]),
         });
         const output = await registry
-          .inject("UsersService")
-          .execute(usersSchema.parse(body));
+          .inject("AffiliateService")
+          .create(affiliateSchema.parse(body));
+        return output;
+      }
+    );
+
+    httpServer.register("get", "/affiliates", async function () {
+      const output = await registry.inject("AffiliateService").getAll();
+      return output;
+    });
+
+    httpServer.register(
+      "put",
+      "/affiliates/:id",
+      async function (params: any, body: any) {
+        const affiliateSchema = z.object({
+          id: z.string(),
+          nome: z.string(),
+          dataNasc: z.string(),
+          email: z.string(),
+          telefone: z.string(),
+          endereco: z.string(),
+          cidade: z.enum([
+            "São Paulo",
+            "Campinas",
+            "Santos",
+            "Rio de Janeiro",
+            "Niterói",
+            "Petrópolis",
+            "Curitiba",
+            "Londrina",
+            "Maringá",
+          ]),
+          estado: z.enum(["SP", "RJ", "BH", "PR"]),
+        });
+        const output = await registry
+          .inject("AffiliateService")
+          .editAffiliate(affiliateSchema.parse({ ...body, id: params.id }));
         return output;
       }
     );
 
     httpServer.register(
       "get",
-      "/affiliate",
-      async function (params: any, body: any) {
-        const usersSchema = z.object({
-          email: z.string(),
-          password: z.string(),
-          name: z.string(),
-        });
+      "/affiliates/:id/status",
+      async function (params: any) {
         const output = await registry
-          .inject("UsersService")
-          .execute(usersSchema.parse(body));
-        return output;
-      }
-    );
-
-    httpServer.register(
-      "put",
-      "/affiliate/:id",
-      async function (params: any, body: any) {
-        const usersSchema = z.object({
-          email: z.string(),
-          password: z.string(),
-          name: z.string(),
-        });
-        const output = await registry
-          .inject("UsersService")
-          .execute(usersSchema.parse(body));
-        return output;
-      }
-    );
-
-    httpServer.register(
-      "post",
-      "/affiliate/status",
-      async function (params: any, body: any) {
-        const usersSchema = z.object({
-          email: z.string(),
-          password: z.string(),
-          name: z.string(),
-        });
-        const output = await registry
-          .inject("UsersService")
-          .execute(usersSchema.parse(body));
+          .inject("AffiliateService")
+          .updateStatus(params.id);
         return output;
       }
     );
