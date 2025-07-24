@@ -16,14 +16,14 @@ export class MainController {
           nome: z.string(),
         });
         const output = await registry
-          .inject("UsersService")
+          .inject("UserService")
           .create(usersSchema.parse(body));
         return output;
       }
     );
 
     httpServer.register("get", "/users", async function () {
-      const output = await registry.inject("UsersService").getAll();
+      const output = await registry.inject("UserService").getAll();
       return output;
     });
 
@@ -33,12 +33,12 @@ export class MainController {
       async function (params: any, body: any) {
         const usersSchema = z.object({
           email: z.string(),
-          senha: z.string(),
+          senha: z.string().optional(),
           nome: z.string(),
           id: z.string(),
         });
         const output = await registry
-          .inject("UsersService")
+          .inject("UserService")
           .editUser(usersSchema.parse({ ...body, id: params.id }));
         return output;
       }
@@ -49,7 +49,7 @@ export class MainController {
       "/users/:id/status",
       async function (params: any) {
         const output = await registry
-          .inject("UsersService")
+          .inject("UserService")
           .updateStatus(params.id);
         return output;
       }
@@ -138,45 +138,35 @@ export class MainController {
       "/commission/create",
       async function (params: any, body: any) {
         const usersSchema = z.object({
-          email: z.string(),
-          password: z.string(),
-          name: z.string(),
+          affiliateId: z.string(),
+          valor: z.number().refine((val: number) => val !== 0),
+          data: z.string(),
         });
         const output = await registry
-          .inject("UsersService")
-          .execute(usersSchema.parse(body));
+          .inject("CommissionService")
+          .create(usersSchema.parse(body));
         return output;
       }
     );
 
     httpServer.register(
-      "post",
-      "/commission/delete",
-      async function (params: any, body: any) {
-        const usersSchema = z.object({
-          email: z.string(),
-          password: z.string(),
-          name: z.string(),
-        });
+      "delete",
+      "/commission/delete/:id",
+      async function (params: any) {
         const output = await registry
-          .inject("UsersService")
-          .execute(usersSchema.parse(body));
+          .inject("CommissionService")
+          .delete(params.id);
         return output;
       }
     );
 
     httpServer.register(
       "get",
-      "/commission/:affiliateId/:commissionId",
-      async function (params: any, body: any) {
-        const usersSchema = z.object({
-          email: z.string(),
-          password: z.string(),
-          name: z.string(),
-        });
+      "/commission/:affiliateId",
+      async function (params: any) {
         const output = await registry
-          .inject("UsersService")
-          .execute(usersSchema.parse(body));
+          .inject("CommissionService")
+          .getByAffiliateId(params.affiliateId);
         return output;
       }
     );

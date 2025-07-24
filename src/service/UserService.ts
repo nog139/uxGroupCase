@@ -1,7 +1,7 @@
 import { readData, writeData } from "../utils/jsonStorage";
 import { randomUUID } from "crypto";
 
-export class UsersService {
+export class UserService {
   constructor() {}
 
   async create(input: InputUser): Promise<OutputUsers> {
