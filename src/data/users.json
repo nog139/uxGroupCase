@@ -1,0 +1,26 @@
+[
+  {
+    "id": "e1f9197a-cc98-4f7f-91ab-12e71f100572",
+    "email": "usuario@example.com",
+    "senha": "senha123",
+    "nome": "nog139",
+    "createdAt": "2025-07-23T23:24:15.412Z",
+    "status": true
+  },
+  {
+    "id": "f6dde0a3-79e6-4ac7-9e58-063091820fb5",
+    "email": "px@example.com",
+    "senha": "senha123",
+    "nome": "Pedrin Paulada",
+    "createdAt": "2025-07-23T23:24:47.410Z",
+    "status": true
+  },
+  {
+    "id": "389f5b18-349d-47ff-91cd-4261b91eb5e7",
+    "email": "rodrigeus@example.com",
+    "senha": "senha123",
+    "nome": "Tiago Rodrigues",
+    "createdAt": "2025-07-23T23:25:06.691Z",
+    "status": true
+  }
+]

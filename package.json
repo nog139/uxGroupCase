@@ -1,0 +1,31 @@
+{
+  "name": "uxgroupcase",
+  "version": "1.0.0",
+  "description": "Project to add routes of users, affiliates and features for them",
+  "main": "main.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/main.js",
+    "dev": "ts-node src/main.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nog139/uxGroupCase.git"
+  },
+  "author": "Vinicius Nog",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nog139/uxGroupCase/issues"
+  },
+  "homepage": "https://github.com/nog139/uxGroupCase#readme",
+  "devDependencies": {
+    "@types/node": "^24.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.0",
+    "fastify": "^5.4.0",
+    "zod": "^4.0.5"
+  }
+}
